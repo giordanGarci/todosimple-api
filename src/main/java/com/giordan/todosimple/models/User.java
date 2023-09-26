@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,7 +40,8 @@ public class User {
     @Size(min = 8, max = 60, groups = {CreateUser.class, UpdateUser.class})
     private String password;
 
-//    private List<Task> tasks = new ArrayList<Task>();
+    @OneToMany(mappedBy = "user")
+    List<Task> tasks = new ArrayList<>();
 
 
 }
