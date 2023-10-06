@@ -15,6 +15,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Table(name = User.TABLE_NAME)
+@Getter @Setter
 public class User {
     public interface CreateUser {
     }
@@ -27,20 +28,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    @Getter @Setter
     private Long id;
 
     @Column(name = "username", length = 100, nullable = false, unique = true)
     @NotBlank(groups = CreateUser.class)
     @Size(min = 2, max = 100, groups = CreateUser.class)
-    @Getter @Setter
     private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password", length = 60, nullable = false)
     @NotBlank(groups = {CreateUser.class, UpdateUser.class})
     @Size(min = 8, max = 60, groups = {CreateUser.class, UpdateUser.class})
-    @Getter @Setter
     private String password;
 
     @OneToMany(mappedBy = "user")
