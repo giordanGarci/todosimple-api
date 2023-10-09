@@ -2,6 +2,8 @@ package com.giordan.todosimple.services;
 
 import com.giordan.todosimple.models.User;
 import com.giordan.todosimple.repositories.UserRepository;
+import com.giordan.todosimple.services.exceptions.DataBindingViolationException;
+import com.giordan.todosimple.services.exceptions.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> user = userRepository.findById(id);
-        return user.orElseThrow(() -> new RuntimeException(
+        return user.orElseThrow(() -> new ObjectNotFoundException(
                 "User not found! Id: " + id + ", Type: " + User.class.getName())
         );
     }
@@ -45,7 +47,7 @@ public class UserService {
         try {
             userRepository.deleteById(id);
         }catch (Exception e){
-            throw new RuntimeException(
+            throw new DataBindingViolationException(
                     "It is not possible to delete as there are related entities");
         }
     }

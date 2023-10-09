@@ -42,11 +42,8 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     List<Task> tasks = new ArrayList<>();
 
-    @JsonIgnore
-    public List<Task> getTasks() {
-        return tasks;
-    }
 
 }
